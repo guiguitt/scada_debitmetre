@@ -1,10 +1,10 @@
 /*
- *  Wifi library
- *  
- *  Alexi Husson
- *  18/04/2019
- */
- 
+    Wifi library
+
+    Alexi Husson
+    18/04/2019
+*/
+
 #include <Arduino.h>
 
 #include "WiFi101.h"
@@ -86,7 +86,7 @@ void printEncryptionType(int thisType) {
 }
 
 void wifiConnect(String ssid, String pass) {
-    if ( WiFi.status() != WL_CONNECTED) {
+  if ( WiFi.status() != WL_CONNECTED) {
     while (WiFi.begin(ssid, pass) != WL_CONNECTED) {
       digitalWrite(6, HIGH);   // turn the LED on (HIGH is the voltage level)
       listNetworks();
@@ -100,24 +100,29 @@ void wifiConnect(String ssid, String pass) {
   }
 }
 
-bool sendData(String data){
-	WiFiClient client;
-	Serial.println("\nStarting connection to server...");
+bool sendData(String data) {
+  WiFiClient client;
+  Serial.println("\nStarting connection to server...");
   String str = "GET /" + String(SCADA_TOKEN) + "/" + data;
-  
-	if (client.connect(SCADA_SERVER, SCADA_PORT)) {
-		Serial.println("connected to server");
-		client.println(str);
-		client.println("Host: ");
-		client.println("Connection: close");
-		client.println();
-    Serial.println("Data " + str + " sended");
 
+  if (client.connect(SCADA_SERVER, SCADA_PORT)) {
+    Serial.println("connected to server");
+    client.println(str);
+    client.println("Host: ");
+    client.println("Connection: close");
+    client.println();
+    Serial.println("Data " + str + " sended");
+    Serial.println("reponse : ");
+    delay(1000);
+    while(client.available()) {
+      char c = client.read();
+      Serial.write(c);
+    }
     return true;
-	}
-	else{
+  }
+  else {
     Serial.println("connection failed");
     WiFi.end();
     return false;
-	}
+  }
 }
