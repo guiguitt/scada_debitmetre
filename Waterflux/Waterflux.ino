@@ -31,7 +31,6 @@ bool sent;
 void setup() {
 
   Serial.begin(9600);
-  while (!Serial) {}
   Serial.flush();
 
   pinMode(LED_ON, OUTPUT);
