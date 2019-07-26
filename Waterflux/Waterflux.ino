@@ -13,7 +13,7 @@
 #include "arrays.h"
 
 #define DEBUG false // debug mode : sends default values to SCADA
-#define PRINT false // Prints output on serial
+#define PRINT true // Prints output on serial
 
 #define WATERFLUX_PIN 5// Waterflux impulsion output (D-) pin
 #define DELAY 1000 // Delay btween 2 sends in ms
